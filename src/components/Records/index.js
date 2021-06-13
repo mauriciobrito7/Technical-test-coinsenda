@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { List, EmptyList } from "./Records.styles";
 import Record from "../Record/";
-import { USER_ID, DEPOSIT_URL, WITHDRAW_URL, SWAP_URL } from "../../const";
+import { USER_ID, DEPOSIT_URL, WITHDRAW_URL, SWAP_URL } from "../../constants";
 
 function Records() {
   const [records, setRecords] = useState([]);
@@ -45,7 +45,10 @@ function Records() {
       })
         .then((res) => res.json())
         .then((data) => data);
-      setRecords(withdraws);
+      const orderedWithdraws = withdraws.sort(function (a, b) {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+      setRecords(orderedWithdraws);
       console.log(withdraws);
       console.log(deposits);
       console.log(swaps);
@@ -68,7 +71,7 @@ function Records() {
       {records.length > 0 ? (
         <List>
           {records.map((record) => (
-            <Record key={record.id}>{record.amount}</Record>
+            <Record key={record.id} record={record} />
           ))}
         </List>
       ) : (
