@@ -1,8 +1,8 @@
 import styled from "styled-components/macro";
-import { colors } from "../../styles/theme";
+import { device, colors } from "../../styles/theme";
 import { Link } from "react-router-dom";
 
-export const RecordContainer = styled.div`
+export const Card = styled.div`
   width: 100%;
   padding: 1em 0.5em;
   min-height: 50px;
@@ -10,10 +10,26 @@ export const RecordContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
 export const RecordItem = styled.div`
   border: 1px dashed brown;
   width: 50%;
+  display: flex;
+  align-items: center;
+  &:nth-of-type(even) {
+    justify-content: flex-end;
+  }
+  ${device.tablet`
+    width: 20%;
+    justify-content: center !important;
+  `}
 `;
+
+export const Headers = styled.header`
+  width: 100%;
+`;
+
+export const RecordHead = styled(RecordItem)``;
 
 export const TypeOfTransaction = styled(RecordItem)`
   text-transform: uppercase;
