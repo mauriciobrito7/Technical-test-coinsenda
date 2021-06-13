@@ -1,22 +1,36 @@
 import React from "react";
 import {
-  RecordContainer,
+  Card,
+  Headers,
+  RecordHead,
   TypeOfTransaction,
   DateOfTransaction,
   Amount,
   Status,
   LinkDetail,
 } from "./Record.styles";
+import { RECORDS_HEADERS } from "../../constants/";
+import { breakpoints } from "../../styles/theme";
+import useMedia from "../../hooks/useMedia";
 
-function Record({ children }) {
+function Record({ record }) {
+  const tablet = useMedia(breakpoints.tablet);
   return (
-    <RecordContainer>
+    <Card>
+      {tablet && (
+        <Headers>
+          {" "}
+          {RECORDS_HEADERS.map((header) => (
+            <RecordHead>{header}</RecordHead>
+          ))}
+        </Headers>
+      )}
       <TypeOfTransaction>Intercambio</TypeOfTransaction>
-      <DateOfTransaction>Junio 12, 2021</DateOfTransaction>
-      <Amount>-1000000</Amount>
-      <Status>Completado</Status>
+      <DateOfTransaction>{record.created_at}</DateOfTransaction>
+      <Amount>-{record.amount}</Amount>
+      <Status>{record.state}</Status>
       <LinkDetail>Ver detalle</LinkDetail>
-    </RecordContainer>
+    </Card>
   );
 }
 
