@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { List, EmptyList } from "./Records.styles";
+import Record from "../Record/";
 import { USER_ID, DEPOSIT_URL, WITHDRAW_URL, SWAP_URL } from "../../const";
 
 function Records() {
@@ -67,7 +68,7 @@ function Records() {
       {records.length > 0 ? (
         <List>
           {records.map((record) => (
-            <li key={record.id}>{record.amount}</li>
+            <Record key={record.id}>{record.amount}</Record>
           ))}
         </List>
       ) : (

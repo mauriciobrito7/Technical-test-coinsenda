@@ -19,5 +19,4 @@ export const EmptyList = styled(List)`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
 `;
