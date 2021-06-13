@@ -1,13 +1,12 @@
 import React from "react";
 import {
-  Card,
-  Headers,
-  RecordHead,
-  TypeOfTransaction,
-  DateOfTransaction,
   Amount,
-  Status,
+  AmountSent,
+  Card,
+  DateOfTransaction,
   LinkDetail,
+  State,
+  TypeOfTransaction,
 } from "./Record.styles";
 import { RECORDS_HEADERS } from "../../constants/";
 import { breakpoints } from "../../styles/theme";
@@ -18,25 +17,19 @@ function Record({ record }) {
   const tablet = useMedia(breakpoints.tablet);
   return (
     <Card>
-      {tablet && (
-        <Headers>
-          {" "}
-          {RECORDS_HEADERS.map((header) => (
-            <RecordHead>{header}</RecordHead>
-          ))}
-        </Headers>
-      )}
       <TypeOfTransaction>Intercambio</TypeOfTransaction>
-      <DateOfTransaction>
-        {formatDateFromString(record.created_at)}
-      </DateOfTransaction>
+
       <Amount>
         -
         {formatterCurrency("es-CO", record.currency.currency).format(
           record.amount
         )}
       </Amount>
-      <Status>{record.state}</Status>
+      <DateOfTransaction>
+        {formatDateFromString(record.created_at)}
+      </DateOfTransaction>
+      <AmountSent>hi</AmountSent>
+      <State>{record.state}</State>
       <LinkDetail>Ver detalle</LinkDetail>
     </Card>
   );
