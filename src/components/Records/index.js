@@ -64,7 +64,7 @@ function Records() {
 
   return (
     <div>
-      <h3>Actividad Reciente</h3>
+      <h2>Actividad Reciente</h2>
       {records.length > 0 ? (
         <List>
           {records.map((record) => (

@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import MuseoSansFont from "../assets/fonts/MuseoSans.otf";
 import MuseoSansBoldFont from "../assets/fonts/MuseoSansBold.otf";
+import { colors } from "../styles/theme";
 
 const GlobalStyles = createGlobalStyle`
   @font-face{ 
@@ -28,7 +29,7 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
-    border: 4px dashed gold;
+    font-size: 16px;
   }
 
   a{
@@ -46,6 +47,7 @@ const GlobalStyles = createGlobalStyle`
   h1,h2,h3,h4,h5,h6 {
     font-family: 'Museo Sans Bold';
     font-weight: bold;
+    color: ${colors.darkGray}
   }
 
   h1 {
