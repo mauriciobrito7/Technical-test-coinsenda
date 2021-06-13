@@ -36,6 +36,7 @@ export const TypeOfTransaction = styled(RecordItem)`
 `;
 export const DateOfTransaction = styled(RecordItem)``;
 export const Amount = styled(RecordItem)``;
+export const AmountSent = styled(RecordItem)``;
 export const Status = styled(RecordItem)``;
 export const LinkDetail = styled(RecordItem)`
   color: ${colors.primary};
