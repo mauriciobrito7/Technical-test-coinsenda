@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
-import Record from "../Record/";
 import { breakpoints } from "../../styles/theme";
 import useMedia from "../../hooks/useMedia";
+import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
+import Record from "../Record/";
+import Filter from "../FilterRecords";
 import {
   USER_ID,
   DEPOSIT_URL,
@@ -77,6 +78,7 @@ function Records() {
   return (
     <div>
       <Title>Actividad Reciente</Title>
+      <Filter />
       {tablet && (
         <Headers>
           {" "}
