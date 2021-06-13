@@ -30,6 +30,7 @@ const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
     font-size: 16px;
+    color:${colors.darkGray}
   }
 
   a{
