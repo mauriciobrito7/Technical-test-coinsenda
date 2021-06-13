@@ -5,6 +5,7 @@ export const colors = {
   secondary: "#0d6d63",
   gray: "#cbcbcb",
   lightGray: "#eeecec",
+  darkGray: "#707070",
 };
 
 export const breakpoints = {
