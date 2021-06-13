@@ -2,10 +2,12 @@ export const colors = {
   black: "#000000",
   white: "#ffffff",
   primary: "#0298ff",
+  lightPrimary: "#dbf1ff",
   secondary: "#0d6d63",
   gray: "#cbcbcb",
   lightGray: "#eeecec",
   darkGray: "#707070",
+  hoverCard: "#f5f8fa",
 };
 
 export const breakpoints = {

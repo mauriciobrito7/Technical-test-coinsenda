@@ -1,5 +1,5 @@
 import styled from "styled-components/macro";
-import { device, colors } from "../../styles/theme";
+import { device, colors, LightenDarkenColor } from "../../styles/theme";
 import { Link } from "react-router-dom";
 
 export const Card = styled.div`
@@ -8,7 +8,16 @@ export const Card = styled.div`
   min-height: 50px;
   border-bottom: 2px solid ${colors.lightGray};
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  &:nth-of-type(odd) {
+    background: ${colors.hoverCard};
+  }
+  &:hover {
+    background: ${colors.lightPrimary};
+  }
 `;
 
 export const RecordItem = styled.div`
@@ -27,12 +36,21 @@ export const RecordItem = styled.div`
 export const TypeOfTransaction = styled(RecordItem)`
   text-transform: uppercase;
   padding-bottom: 0.5em;
+  ${device.tablet`
+    padding-bottom: 0;
+  `}
 `;
 export const DateOfTransaction = styled(RecordItem)`
   padding-bottom: 0.5em;
+  ${device.tablet`
+    padding-bottom: 0;
+  `}
 `;
 export const AmountSent = styled(RecordItem)`
   padding-bottom: 0.5em;
+  ${device.tablet`
+    padding-bottom: 0;
+  `}
 `;
 export const Amount = styled(RecordItem)``;
 export const State = styled(RecordItem)``;
