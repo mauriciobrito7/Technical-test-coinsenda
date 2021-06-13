@@ -12,6 +12,7 @@ import {
 import { RECORDS_HEADERS } from "../../constants/";
 import { breakpoints } from "../../styles/theme";
 import useMedia from "../../hooks/useMedia";
+import { formatDateFromString } from "../../utils";
 
 function Record({ record }) {
   const tablet = useMedia(breakpoints.tablet);
@@ -26,7 +27,9 @@ function Record({ record }) {
         </Headers>
       )}
       <TypeOfTransaction>Intercambio</TypeOfTransaction>
-      <DateOfTransaction>{record.created_at}</DateOfTransaction>
+      <DateOfTransaction>
+        {formatDateFromString(record.created_at)}
+      </DateOfTransaction>
       <Amount>-{record.amount}</Amount>
       <Status>{record.state}</Status>
       <LinkDetail>Ver detalle</LinkDetail>

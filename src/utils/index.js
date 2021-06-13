@@ -9,6 +9,19 @@ export const formatterCurrency = (locales, currency) =>
     minimumFractionDigits: 0,
   });
 
+export const formatDateFromString = (date) => {
+  const newDate = new Date(date);
+
+  const formatDate =
+    newDate.getDate() +
+    "-" +
+    (newDate.getMonth() + 1) +
+    "-" +
+    newDate.getFullYear();
+
+  return formatDate;
+};
+
 export const parseJwt = (token) => {
   var base64Url = token.split(".")[1];
   var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
