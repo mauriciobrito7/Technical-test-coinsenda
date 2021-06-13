@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
-import { List, EmptyList } from "./Records.styles";
+import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
 import Record from "../Record/";
-import { USER_ID, DEPOSIT_URL, WITHDRAW_URL, SWAP_URL } from "../../constants";
+import { breakpoints } from "../../styles/theme";
+import useMedia from "../../hooks/useMedia";
+import {
+  USER_ID,
+  DEPOSIT_URL,
+  WITHDRAW_URL,
+  SWAP_URL,
+  RECORDS_HEADERS,
+} from "../../constants";
 
 function Records() {
   const [records, setRecords] = useState([]);
   const [authToken, setAuthToken] = useState(
     "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiI2MGIxZGE4NzA5ODI2ODAwNjRiMWJmMDQiLCJhdXRoX2NsaWVudF9pZCI6IjYwNjdmNWE5YmRkNzJkMDBkMTA3NjM2NSIsImlzcyI6IjYwNjdmNThlYmRkNzJkMDBkMTA3NjM1YSIsImF1ZCI6InRyYW5zYWN0aW9uLGlkZW50aXR5LGF1dGgsbm90aWZpY2F0aW9uLGluZm8sdHJhbnNhY3Rpb24sYWNjb3VudCxkZXBvc2l0LHdpdGhkcmF3LHN3YXAiLCJlbWFpbCI6InNvcG9ydGUrX3Rlc3RpbmdAY29pbnNlbmRhLmNvbSIsImxhbmd1YWdlIjoiZXMiLCJtZXRhZGF0YSI6Int9IiwianRpIjoiNjBjMzhlZmNmYWRhYmMwMDY0Mjc1NTViIiwiaWF0IjoxNjIzNDI4ODYwLCJleHAiOjkwMDAxNjIzNDI4ODYwfQ.cMpsIcBY1PO6bsBw0DKqIKC2xpUd389IxJ1RRmO7JuQO6OFSMQKwofKhsQ6C5mHtkfvtRsuHPeqmxqhj2-ZDMA"
   );
+  const tablet = useMedia(breakpoints.tablet);
 
   const handleError = (err) => {
     // TODO: Create a method to handle error
@@ -67,7 +76,15 @@ function Records() {
 
   return (
     <div>
-      <h2>Actividad Reciente</h2>
+      <Title>Actividad Reciente</Title>
+      {tablet && (
+        <Headers>
+          {" "}
+          {RECORDS_HEADERS.map((header) => (
+            <RecordHead>{header}</RecordHead>
+          ))}
+        </Headers>
+      )}
       {records.length > 0 ? (
         <List>
           {records.map((record) => (

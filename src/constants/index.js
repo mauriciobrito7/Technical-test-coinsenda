@@ -3,4 +3,10 @@ export const DEPOSIT_URL = "https://deposit.bitsenda.com/api/";
 export const WITHDRAW_URL = "https://withdraw.bitsenda.com/api/";
 export const SWAP_URL = "https://swap.bitsenda.com/api/";
 
-export const RECORDS_HEADERS = ["Transacción", "Fecha", "Monto", "Estado"];
+export const RECORDS_HEADERS = [
+  "Transacción",
+  "Ingresado",
+  "Fecha",
+  "Egresado",
+  "Estado",
+];
