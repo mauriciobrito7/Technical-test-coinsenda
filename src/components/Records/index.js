@@ -92,7 +92,7 @@ function Records() {
           ))}
         </List>
       ) : (
-        <EmptyList>No records to display</EmptyList>
+        <EmptyList>No hay registro de actividad</EmptyList>
       )}
     </div>
   );
