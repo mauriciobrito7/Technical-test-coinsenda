@@ -12,7 +12,7 @@ import {
 import { RECORDS_HEADERS } from "../../constants/";
 import { breakpoints } from "../../styles/theme";
 import useMedia from "../../hooks/useMedia";
-import { formatDateFromString } from "../../utils";
+import { formatDateFromString, formatterCurrency } from "../../utils";
 
 function Record({ record }) {
   const tablet = useMedia(breakpoints.tablet);
@@ -30,7 +30,12 @@ function Record({ record }) {
       <DateOfTransaction>
         {formatDateFromString(record.created_at)}
       </DateOfTransaction>
-      <Amount>-{record.amount}</Amount>
+      <Amount>
+        -
+        {formatterCurrency("es-CO", record.currency.currency).format(
+          record.amount
+        )}
+      </Amount>
       <Status>{record.state}</Status>
       <LinkDetail>Ver detalle</LinkDetail>
     </Card>
