@@ -8,13 +8,9 @@ import {
   State,
   TypeOfTransaction,
 } from "./Record.styles";
-import { RECORDS_HEADERS } from "../../constants/";
-import { breakpoints } from "../../styles/theme";
-import useMedia from "../../hooks/useMedia";
 import { formatDateFromString, formatterCurrency } from "../../utils";
 
 function Record({ record }) {
-  const tablet = useMedia(breakpoints.tablet);
   return (
     <Card>
       <TypeOfTransaction>Intercambio</TypeOfTransaction>

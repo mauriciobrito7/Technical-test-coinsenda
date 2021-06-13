@@ -24,15 +24,6 @@ export const RecordItem = styled.div`
   `}
 `;
 
-export const Headers = styled.header`
-  width: 100%;
-  display: flex;
-`;
-
-export const RecordHead = styled(RecordItem)`
-  font-family: "Museo Sans Bold";
-`;
-
 export const TypeOfTransaction = styled(RecordItem)`
   text-transform: uppercase;
   padding-bottom: 0.5em;
