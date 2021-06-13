@@ -6,13 +6,12 @@ export const Card = styled.div`
   width: 100%;
   padding: 1em 0.5em;
   min-height: 50px;
-  border-bottom: 1px solid ${colors.lightGray};
+  border-bottom: 2px solid ${colors.lightGray};
   display: flex;
   flex-wrap: wrap;
 `;
 
 export const RecordItem = styled.div`
-  border: 1px dashed brown;
   width: 50%;
   display: flex;
   align-items: center;
@@ -20,24 +19,32 @@ export const RecordItem = styled.div`
     justify-content: flex-end;
   }
   ${device.tablet`
-    width: 20%;
+    width: 16.6%;
     justify-content: center !important;
   `}
 `;
 
 export const Headers = styled.header`
   width: 100%;
+  display: flex;
 `;
 
-export const RecordHead = styled(RecordItem)``;
+export const RecordHead = styled(RecordItem)`
+  font-family: "Museo Sans Bold";
+`;
 
 export const TypeOfTransaction = styled(RecordItem)`
   text-transform: uppercase;
+  padding-bottom: 0.5em;
 `;
-export const DateOfTransaction = styled(RecordItem)``;
+export const DateOfTransaction = styled(RecordItem)`
+  padding-bottom: 0.5em;
+`;
+export const AmountSent = styled(RecordItem)`
+  padding-bottom: 0.5em;
+`;
 export const Amount = styled(RecordItem)``;
-export const AmountSent = styled(RecordItem)``;
-export const Status = styled(RecordItem)``;
+export const State = styled(RecordItem)``;
 export const LinkDetail = styled(RecordItem)`
   color: ${colors.primary};
   font-weight: bold;
