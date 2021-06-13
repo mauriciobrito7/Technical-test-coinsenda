@@ -15,6 +15,7 @@ export const ListContainer = styled.div`
 export const Headers = styled.header`
   width: 100%;
   display: flex;
+  margin-bottom: 1em;
 `;
 
 export const RecordHead = styled.div`
@@ -42,4 +43,7 @@ export const EmptyList = styled(List)`
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 256px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 `;
