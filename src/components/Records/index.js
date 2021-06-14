@@ -65,7 +65,7 @@ function Records({
   return (
     <div>
       <Title>Actividad Reciente</Title>
-      <Filter />
+      <Filter setRecords={setRecords} />
       {tablet && (
         <Headers>
           {" "}

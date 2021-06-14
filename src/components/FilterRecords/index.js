@@ -3,8 +3,9 @@ import { FilterContainer, Btn } from "./Filter.styles";
 import { ReactComponent as ArrowUp } from "../../assets/icons/arrowUp.svg";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 import { ReactComponent as Exchange } from "../../assets/icons/exchange.svg";
+import { connect } from "react-redux";
 
-function Filter() {
+function Filter({ deposits, withdraws, swaps, activities, setRecords }) {
   const [filterSelected, setFilterSelected] = useState("all");
 
   const isSelected = (option) => {
@@ -16,6 +17,22 @@ function Filter() {
 
   const selectFilter = (option) => {
     setFilterSelected(option);
+    switch (option) {
+      case "all":
+        setRecords(activities);
+        break;
+      case "deposits":
+        setRecords(deposits);
+        break;
+      case "withdraws":
+        setRecords(withdraws);
+        break;
+      case "swaps":
+        setRecords(swaps);
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -42,4 +59,10 @@ function Filter() {
   );
 }
 
-export default Filter;
+const mapStateToProps = (state) => ({
+  deposits: state.activity.deposits,
+  withdraws: state.activity.withdraws,
+  swaps: state.activity.swaps,
+  activities: state.activity.activities,
+});
+export default connect(mapStateToProps)(Filter);
