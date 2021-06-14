@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Amount,
   AmountSent,
@@ -9,17 +9,26 @@ import {
   TypeOfTransaction,
 } from "./Record.styles";
 import { formatDateFromString, formatterCurrency } from "../../utils";
+import { useNearScreen } from "../../hooks/useNearScreen";
 
-function Record({ record }) {
+function Record({ record, setCounter }) {
+  const [loadMore, element] = useNearScreen();
+
+  useEffect(() => {
+    if (loadMore) {
+      setCounter((prevState) => prevState + 1);
+    }
+  }, [loadMore]);
   return (
-    <Card to={`/transaction/${record.id}`}>
+    <Card ref={element} to={`/transaction/${record.id}`}>
       <TypeOfTransaction>Intercambio</TypeOfTransaction>
 
       <Amount>
         -
-        {formatterCurrency("es-CO", record.currency.currency).format(
-          record.amount
-        )}
+        {record.currency &&
+          formatterCurrency("es-CO", record.currency.currency).format(
+            record.amount
+          )}
       </Amount>
       <DateOfTransaction>
         {formatDateFromString(record.created_at)}

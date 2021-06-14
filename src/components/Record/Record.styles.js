@@ -14,7 +14,7 @@ export const Card = styled(Link)`
   cursor: pointer;
   color: inherit;
   transition: background 0.3s ease;
-  ${fadeIn({ time: ".5s" })};
+  ${fadeIn({ time: "2.5s" })};
   &:nth-of-type(odd) {
     background: ${colors.hoverCard};
   }

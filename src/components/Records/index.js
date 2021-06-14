@@ -18,6 +18,8 @@ function Records() {
     "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiI2MGIxZGE4NzA5ODI2ODAwNjRiMWJmMDQiLCJhdXRoX2NsaWVudF9pZCI6IjYwNjdmNWE5YmRkNzJkMDBkMTA3NjM2NSIsImlzcyI6IjYwNjdmNThlYmRkNzJkMDBkMTA3NjM1YSIsImF1ZCI6InRyYW5zYWN0aW9uLGlkZW50aXR5LGF1dGgsbm90aWZpY2F0aW9uLGluZm8sdHJhbnNhY3Rpb24sYWNjb3VudCxkZXBvc2l0LHdpdGhkcmF3LHN3YXAiLCJlbWFpbCI6InNvcG9ydGUrX3Rlc3RpbmdAY29pbnNlbmRhLmNvbSIsImxhbmd1YWdlIjoiZXMiLCJtZXRhZGF0YSI6Int9IiwianRpIjoiNjBjMzhlZmNmYWRhYmMwMDY0Mjc1NTViIiwiaWF0IjoxNjIzNDI4ODYwLCJleHAiOjkwMDAxNjIzNDI4ODYwfQ.cMpsIcBY1PO6bsBw0DKqIKC2xpUd389IxJ1RRmO7JuQO6OFSMQKwofKhsQ6C5mHtkfvtRsuHPeqmxqhj2-ZDMA"
   );
   const tablet = useMedia(breakpoints.tablet);
+  const [counter, setCounter] = useState(1);
+  const NUMBER_OF_ELEMENTS = 10;
 
   const handleError = (err) => {
     // TODO: Create a method to handle error
@@ -55,10 +57,25 @@ function Records() {
       })
         .then((res) => res.json())
         .then((data) => data);
+
       const orderedWithdraws = withdraws.sort(function (a, b) {
         return new Date(b.created_at) - new Date(a.created_at);
       });
-      setRecords(orderedWithdraws);
+      const orderedDeposits = deposits.sort(function (a, b) {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+      const orderedSwaps = swaps.sort(function (a, b) {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+      const arrayMerge = orderedWithdraws
+        .concat(orderedDeposits)
+        .concat(orderedSwaps);
+      const arrayMergeOrdered = arrayMerge.sort(function (a, b) {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+
+      console.log(arrayMergeOrdered);
+      setRecords(arrayMergeOrdered);
       console.log(withdraws);
       console.log(deposits);
       console.log(swaps);
@@ -89,8 +106,8 @@ function Records() {
       )}
       {records.length > 0 ? (
         <List>
-          {records.map((record) => (
-            <Record key={record.id} record={record} />
+          {records.slice(1, NUMBER_OF_ELEMENTS + counter).map((record) => (
+            <Record setCounter={setCounter} key={record.id} record={record} />
           ))}
         </List>
       ) : (
