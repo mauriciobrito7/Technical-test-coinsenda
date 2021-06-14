@@ -5,6 +5,7 @@ export const colors = {
   lightPrimary: "#dbf1ff",
   secondary: "#0d6d63",
   gray: "#cbcbcb",
+  red: "#FF3232",
   lightGray: "#eeecec",
   darkGray: "#707070",
   hoverCard: "#f5f8fa",
