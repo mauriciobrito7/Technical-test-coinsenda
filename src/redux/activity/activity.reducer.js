@@ -6,8 +6,9 @@ const INITIAL_STATE = {
   swaps: [],
   activities: [],
   loading: false,
+  error: null,
   authToken:
-    "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiI2MGIxZGE4NzA5ODI2ODAwNjRiMWJmMDQiLCJhdXRoX2NsaWVudF9pZCI6IjYwNjdmNWE5YmRkNzJkMDBkMTA3NjM2NSIsImlzcyI6IjYwNjdmNThlYmRkNzJkMDBkMTA3NjM1YSIsImF1ZCI6InRyYW5zYWN0aW9uLGlkZW50aXR5LGF1dGgsbm90aWZpY2F0aW9uLGluZm8sdHJhbnNhY3Rpb24sYWNjb3VudCxkZXBvc2l0LHdpdGhkcmF3LHN3YXAiLCJlbWFpbCI6InNvcG9ydGUrX3Rlc3RpbmdAY29pbnNlbmRhLmNvbSIsImxhbmd1YWdlIjoiZXMiLCJtZXRhZGF0YSI6Int9IiwianRpIjoiNjBjN2FhYzhiZjE2YzYwMDU2NDUyOTI5IiwiaWF0IjoxNjIzNjk4MTIwLCJleHAiOjE2MjM2OTg0MjB9.B-GodkjEFE9a0mZb0aLAKft_p-5foBmhUyASlg-sVMpB-XAuWTkkLnjJ-KjBIsz7dgs1e-9rvnWmWbn5_92Ocg",
+    "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiI2MGIxZGE4NzA5ODI2ODAwNjRiMWJmMDQiLCJhdXRoX2NsaWVudF9pZCI6IjYwNjdmNWE5YmRkNzJkMDBkMTA3NjM2NSIsImlzcyI6IjYwNjdmNThlYmRkNzJkMDBkMTA3NjM1YSIsImF1ZCI6InRyYW5zYWN0aW9uLGlkZW50aXR5LGF1dGgsbm90aWZpY2F0aW9uLGluZm8sdHJhbnNhY3Rpb24sYWNjb3VudCxkZXBvc2l0LHdpdGhkcmF3LHN3YXAiLCJlbWFpbCI6InNvcG9ydGUrX3Rlc3RpbmdAY29pbnNlbmRhLmNvbSIsImxhbmd1YWdlIjoiZXMiLCJtZXRhZGF0YSI6Int9IiwianRpIjoiNjBjN2RhZmZiZjE2YzYwMDU2NDUyOTUxIiwiaWF0IjoxNjIzNzEwNDYzLCJleHAiOjE2MjM3MTA3NjN9.fTxN3qbDP00xDrPeh5Qbk7Vw6pSVgHdC48EEJYld-0nN7s7h_UTaep4ORUYNaVP3ZUOshQelW5ryiZpv2a1EFw",
 };
 
 const activityReducer = (state = INITIAL_STATE, action) => {
@@ -53,6 +54,18 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+
+    case "SET_ERROR":
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case "SET_TOKEN":
+      return {
+        ...state,
+        authToken: action.payload,
       };
     default:
       return state;

@@ -21,3 +21,13 @@ export const setLoading = (flag) => ({
   type: "SET_LOADING",
   payload: flag,
 });
+
+export const setError = (error) => ({
+  type: "SET_ERROR",
+  payload: error,
+});
+
+export const setToken = (token) => ({
+  type: "SET_TOKEN",
+  payload: token,
+});
