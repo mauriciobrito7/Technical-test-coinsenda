@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { connect } from "react-redux";
 import { breakpoints } from "../../styles/theme";
 import useMedia from "../../hooks/useMedia";
@@ -54,9 +54,13 @@ function Records({
     if (authToken) {
       fetchRecords();
     }
-    console.log(activities.flat());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
+
+  useMemo(() => {
+    setRecords(activities);
+  }, [activities]);
 
   return (
     <div>
@@ -71,9 +75,9 @@ function Records({
         </Headers>
       )}
 
-      {activities !== undefined && activities?.length > 0 ? (
+      {records !== undefined && authToken && records?.length > 0 ? (
         <List>
-          {activities
+          {records
             .flat()
             .slice(1, NUMBER_OF_ELEMENTS + counter)
             .map((record) => {
@@ -86,6 +90,7 @@ function Records({
                   />
                 );
               }
+              return <></>;
             })}
         </List>
       ) : loading ? (
