@@ -1,9 +1,9 @@
 import styled from "styled-components/macro";
 import { device, colors } from "../../styles/theme";
 import { fadeIn } from "../../styles/animation";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export const Card = styled.div`
+export const Card = styled(Link)`
   width: 100%;
   padding: 1em 1em;
   min-height: 50px;
@@ -12,6 +12,7 @@ export const Card = styled.div`
   align-items: center;
   flex-wrap: wrap;
   cursor: pointer;
+  color: inherit;
   transition: background 0.3s ease;
   ${fadeIn({ time: ".5s" })};
   &:nth-of-type(odd) {
