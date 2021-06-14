@@ -14,7 +14,6 @@ export function useNearScreen() {
         const { isIntersecting } = entries[0];
         if (isIntersecting) {
           setLoadMore(true);
-          console.log(element);
           observer.disconnect();
         }
       });
