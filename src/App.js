@@ -18,7 +18,7 @@ function App() {
           <Router>
             <ScrollToTop />
             <Route exact path="/" component={Balance} />
-            <Route exact path="/transaction/:id" component={RecordDetail} />
+            <Route path="/transaction/:id" component={RecordDetail} />
             <Switch></Switch>
           </Router>
         </Layout>
