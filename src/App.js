@@ -18,15 +18,15 @@ function App() {
       <Suspense fallback={<Spinner />}>
         <GlobalStyles />
         <Provider store={store}>
-          <Header />
-          <Layout>
-            <Router>
+          <Router>
+            <Header />
+            <Layout>
               <ScrollToTop />
               <Route exact path="/" component={Balance} />
               <Route path="/transaction/:id" component={RecordDetail} />
               <Switch></Switch>
-            </Router>
-          </Layout>
+            </Layout>
+          </Router>
         </Provider>
       </Suspense>
     </div>
