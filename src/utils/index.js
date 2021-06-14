@@ -24,7 +24,6 @@ export const formatDateFromString = (date) => {
 
 export const normalizeData = (payload, type) => {
   let activitiesFlat = payload.flat();
-  console.log(activitiesFlat);
   activitiesFlat = activitiesFlat.map((activity) => {
     return {
       id: activity.id,
