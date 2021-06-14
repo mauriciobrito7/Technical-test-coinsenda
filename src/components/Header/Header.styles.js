@@ -25,4 +25,6 @@ export const Logo = styled.div`
   }
 `;
 
-export const Author = styled.div``;
+export const Author = styled.div`
+  font-weight: bold;
+`;
