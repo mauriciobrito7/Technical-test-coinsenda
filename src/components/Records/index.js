@@ -5,6 +5,7 @@ import useMedia from "../../hooks/useMedia";
 import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
 import Record from "../Record/";
 import Filter from "../FilterRecords";
+import ErrorModal from "../ErrorModal";
 import Spinner from "../Spinner";
 import { RECORDS_HEADERS } from "../../constants";
 import {
@@ -13,6 +14,7 @@ import {
   setSwaps,
   setLoading,
   setActivities,
+  setError,
 } from "../../redux/activity/activity.actions";
 import { fetchDeposits, fetchWithDraws, fetchSwaps } from "../../utils/api";
 
@@ -23,26 +25,24 @@ function Records({
   setSwaps,
   setLoading,
   setActivities,
-  deposits,
-  withdraws,
-  swaps,
   activities,
   loading,
+  setError,
+  error,
 }) {
   const [records, setRecords] = useState([]);
   const tablet = useMedia(breakpoints.tablet);
   const [counter, setCounter] = useState(1);
   const NUMBER_OF_ELEMENTS = 10;
 
-  const handleError = (err) => {
-    // TODO: Create a method to handle error
-    console.log(err);
-    return;
-  };
   const fetchRecords = async () => {
-    await fetchDeposits(authToken).then((data) => setDeposits(data));
-    await fetchWithDraws(authToken).then((data) => setWithdraws(data));
-    await fetchSwaps(authToken).then((data) => setSwaps(data));
+    try {
+      await fetchDeposits(authToken).then((data) => setDeposits(data));
+      await fetchWithDraws(authToken).then((data) => setWithdraws(data));
+      await fetchSwaps(authToken).then((data) => setSwaps(data));
+    } catch (error) {
+      setError(error);
+    }
     setActivities();
 
     setLoading(false);
@@ -98,6 +98,7 @@ function Records({
       ) : (
         <EmptyList>No hay registro de actividad</EmptyList>
       )}
+      {error && <ErrorModal isOpen={error ? true : false} />}
     </div>
   );
 }
@@ -109,6 +110,7 @@ const mapStateToProps = (state) => ({
   authToken: state.activity.authToken,
   loading: state.activity.loading,
   activities: state.activity.activities,
+  error: state.activity.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -117,6 +119,7 @@ const mapDispatchToProps = (dispatch) => ({
   setSwaps: (swaps) => dispatch(setSwaps(swaps)),
   setActivities: () => dispatch(setActivities()),
   setLoading: (flag) => dispatch(setLoading(flag)),
+  setError: (error) => dispatch(setError(error)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Records);
