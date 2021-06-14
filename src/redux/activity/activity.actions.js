@@ -1,13 +1,20 @@
-export const fetchDeposits = () => ({
-  type: "FETCH_DEPOSITS",
+export const setDeposits = (deposit) => ({
+  type: "SET_DEPOSITS",
+  payload: deposit,
 });
 
-export const fetchWithdraws = () => ({
-  type: "FETCH_WITHDRAWS",
+export const setWithdraws = (withdraws) => ({
+  type: "SET_WITHDRAWS",
+  payload: withdraws,
 });
 
-export const fetchSwaps = () => ({
-  type: "FETCH_SWAPS",
+export const setSwaps = (swaps) => ({
+  type: "SET_SWAPS",
+  payload: swaps,
+});
+
+export const setActivities = () => ({
+  type: "SET_ACTIVITIES",
 });
 
 export const setLoading = (flag) => ({

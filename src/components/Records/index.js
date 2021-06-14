@@ -5,25 +5,31 @@ import useMedia from "../../hooks/useMedia";
 import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
 import Record from "../Record/";
 import Filter from "../FilterRecords";
+import Spinner from "../Spinner";
+import { RECORDS_HEADERS } from "../../constants";
 import {
-  USER_ID,
-  DEPOSIT_URL,
-  WITHDRAW_URL,
-  SWAP_URL,
-  RECORDS_HEADERS,
-} from "../../constants";
-import {
-  fetchDeposits,
-  fetchWithdraws,
-  fetchSwaps,
+  setDeposits,
+  setWithdraws,
+  setSwaps,
   setLoading,
+  setActivities,
 } from "../../redux/activity/activity.actions";
+import { fetchDeposits, fetchWithDraws, fetchSwaps } from "../../utils/api";
 
-function Records() {
+function Records({
+  authToken,
+  setDeposits,
+  setWithdraws,
+  setSwaps,
+  setLoading,
+  setActivities,
+  deposits,
+  withdraws,
+  swaps,
+  activities,
+  loading,
+}) {
   const [records, setRecords] = useState([]);
-  const [authToken, setAuthToken] = useState(
-    "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiI2MGIxZGE4NzA5ODI2ODAwNjRiMWJmMDQiLCJhdXRoX2NsaWVudF9pZCI6IjYwNjdmNWE5YmRkNzJkMDBkMTA3NjM2NSIsImlzcyI6IjYwNjdmNThlYmRkNzJkMDBkMTA3NjM1YSIsImF1ZCI6InRyYW5zYWN0aW9uLGlkZW50aXR5LGF1dGgsbm90aWZpY2F0aW9uLGluZm8sdHJhbnNhY3Rpb24sYWNjb3VudCxkZXBvc2l0LHdpdGhkcmF3LHN3YXAiLCJlbWFpbCI6InNvcG9ydGUrX3Rlc3RpbmdAY29pbnNlbmRhLmNvbSIsImxhbmd1YWdlIjoiZXMiLCJtZXRhZGF0YSI6Int9IiwianRpIjoiNjBjMzhlZmNmYWRhYmMwMDY0Mjc1NTViIiwiaWF0IjoxNjIzNDI4ODYwLCJleHAiOjkwMDAxNjIzNDI4ODYwfQ.cMpsIcBY1PO6bsBw0DKqIKC2xpUd389IxJ1RRmO7JuQO6OFSMQKwofKhsQ6C5mHtkfvtRsuHPeqmxqhj2-ZDMA"
-  );
   const tablet = useMedia(breakpoints.tablet);
   const [counter, setCounter] = useState(1);
   const NUMBER_OF_ELEMENTS = 10;
@@ -33,69 +39,22 @@ function Records() {
     console.log(err);
     return;
   };
-  const fetchRecords = async (url) => {
-    try {
-      const withdraws = await fetch(
-        `${WITHDRAW_URL}users/${USER_ID}/withdraws`,
-        {
-          method: `GET`,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => data);
+  const fetchRecords = async () => {
+    await fetchDeposits(authToken).then((data) => setDeposits(data));
+    await fetchWithDraws(authToken).then((data) => setWithdraws(data));
+    await fetchSwaps(authToken).then((data) => setSwaps(data));
+    setActivities();
 
-      const deposits = await fetch(`${DEPOSIT_URL}users/${USER_ID}/deposits`, {
-        method: `GET`,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data);
-
-      const swaps = await fetch(`${SWAP_URL}users/${USER_ID}/swaps`, {
-        method: `GET`,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data);
-
-      const orderedWithdraws = withdraws.sort(function (a, b) {
-        return new Date(b.created_at) - new Date(a.created_at);
-      });
-      const orderedDeposits = deposits.sort(function (a, b) {
-        return new Date(b.created_at) - new Date(a.created_at);
-      });
-      const orderedSwaps = swaps.sort(function (a, b) {
-        return new Date(b.created_at) - new Date(a.created_at);
-      });
-      const arrayMerge = orderedWithdraws
-        .concat(orderedDeposits)
-        .concat(orderedSwaps);
-      const arrayMergeOrdered = arrayMerge.sort(function (a, b) {
-        return new Date(b.created_at) - new Date(a.created_at);
-      });
-
-      console.log(arrayMergeOrdered);
-      setRecords(arrayMergeOrdered);
-      console.log(withdraws);
-      console.log(deposits);
-      console.log(swaps);
-    } catch (_) {
-      return handleError(_);
-    }
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (authToken.length > 0) {
+    setLoading(true);
+
+    if (authToken) {
       fetchRecords();
     }
-
+    console.log(activities.flat());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
 
@@ -111,12 +70,26 @@ function Records() {
           ))}
         </Headers>
       )}
-      {records.length > 0 ? (
+
+      {activities !== undefined && activities?.length > 0 ? (
         <List>
-          {records.slice(1, NUMBER_OF_ELEMENTS + counter).map((record) => (
-            <Record setCounter={setCounter} key={record.id} record={record} />
-          ))}
+          {activities
+            .flat()
+            .slice(1, NUMBER_OF_ELEMENTS + counter)
+            .map((record) => {
+              if (record) {
+                return (
+                  <Record
+                    setCounter={setCounter}
+                    key={record.id}
+                    record={record}
+                  />
+                );
+              }
+            })}
         </List>
+      ) : loading ? (
+        <Spinner />
       ) : (
         <EmptyList>No hay registro de actividad</EmptyList>
       )}
@@ -125,17 +98,20 @@ function Records() {
 }
 
 const mapStateToProps = (state) => ({
-  deposits: state.deposits,
-  withdraws: state.withdraws,
-  swaps: state.swaps,
-  loading: state.loading,
+  deposits: state.activity.deposits,
+  withdraws: state.activity.withdraws,
+  swaps: state.activity.swaps,
+  authToken: state.activity.authToken,
+  loading: state.activity.loading,
+  activities: state.activity.activities,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchDeposits: () => dispatch(fetchDeposits()),
-  fetchWithdraws: () => dispatch(fetchWithdraws()),
-  fetchSwaps: () => dispatch(fetchSwaps()),
+  setDeposits: (deposits) => dispatch(setDeposits(deposits)),
+  setWithdraws: (withdraws) => dispatch(setWithdraws(withdraws)),
+  setSwaps: (swaps) => dispatch(setSwaps(swaps)),
+  setActivities: () => dispatch(setActivities()),
   setLoading: (flag) => dispatch(setLoading(flag)),
 });
 
-export default Records;
+export default connect(mapStateToProps, mapDispatchToProps)(Records);
