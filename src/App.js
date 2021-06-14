@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
+import Header from "./components/Header";
 import Layout from "./components/Layout";
 import Spinner from "./components/Spinner";
 import ScrollToTop from "./components/ScrollToTop";
@@ -14,6 +15,7 @@ function App() {
     <div className="App">
       <Suspense fallback={<Spinner />}>
         <GlobalStyles />
+        <Header />
         <Layout>
           <Router>
             <ScrollToTop />
