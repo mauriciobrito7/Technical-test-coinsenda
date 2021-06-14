@@ -12,7 +12,7 @@ import { formatDateFromString, formatterCurrency } from "../../utils";
 
 function Record({ record }) {
   return (
-    <Card>
+    <Card to={`/transaction/${record.id}`}>
       <TypeOfTransaction>Intercambio</TypeOfTransaction>
 
       <Amount>
