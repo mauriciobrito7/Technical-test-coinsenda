@@ -57,7 +57,7 @@ export const AmountSent = styled(RecordItem)`
 `;
 export const Amount = styled(RecordItem)``;
 export const State = styled(RecordItem)``;
-export const LinkDetail = styled(RecordItem)`
+export const LinkDetail = styled(RecordItem, Link)`
   color: ${colors.primary};
   font-weight: bold;
 `;

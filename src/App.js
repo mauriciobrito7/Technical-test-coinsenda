@@ -1,4 +1,6 @@
 import React, { Suspense } from "react";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
 import Header from "./components/Header";
@@ -15,15 +17,17 @@ function App() {
     <div className="App">
       <Suspense fallback={<Spinner />}>
         <GlobalStyles />
-        <Header />
-        <Layout>
-          <Router>
-            <ScrollToTop />
-            <Route exact path="/" component={Balance} />
-            <Route path="/transaction/:id" component={RecordDetail} />
-            <Switch></Switch>
-          </Router>
-        </Layout>
+        <Provider store={store}>
+          <Header />
+          <Layout>
+            <Router>
+              <ScrollToTop />
+              <Route exact path="/" component={Balance} />
+              <Route path="/transaction/:id" component={RecordDetail} />
+              <Switch></Switch>
+            </Router>
+          </Layout>
+        </Provider>
       </Suspense>
     </div>
   );

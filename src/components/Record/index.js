@@ -34,8 +34,8 @@ function Record({ record, setCounter }) {
         {formatDateFromString(record.created_at)}
       </DateOfTransaction>
       <AmountSent>hi</AmountSent>
-      <State>{record.state}</State>
-      <LinkDetail>Ver detalle</LinkDetail>
+      <State>{record.state ? "Aceptado" : "Rechazado"}</State>
+      <LinkDetail to={`/transaction/${record.id}`}>Ver detalle</LinkDetail>
     </Card>
   );
 }

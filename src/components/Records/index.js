@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { breakpoints } from "../../styles/theme";
 import useMedia from "../../hooks/useMedia";
 import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
@@ -11,6 +12,12 @@ import {
   SWAP_URL,
   RECORDS_HEADERS,
 } from "../../constants";
+import {
+  fetchDeposits,
+  fetchWithdraws,
+  fetchSwaps,
+  setLoading,
+} from "../../redux/activity/activity.actions";
 
 function Records() {
   const [records, setRecords] = useState([]);
@@ -116,5 +123,19 @@ function Records() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  deposits: state.deposits,
+  withdraws: state.withdraws,
+  swaps: state.swaps,
+  loading: state.loading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchDeposits: () => dispatch(fetchDeposits()),
+  fetchWithdraws: () => dispatch(fetchWithdraws()),
+  fetchSwaps: () => dispatch(fetchSwaps()),
+  setLoading: (flag) => dispatch(setLoading(flag)),
+});
 
 export default Records;
