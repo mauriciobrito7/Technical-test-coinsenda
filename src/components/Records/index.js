@@ -1,82 +1,71 @@
-import { useEffect, useState } from "react";
-import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
-import Record from "../Record/";
+import { useEffect, useState, useMemo } from "react";
+import { connect } from "react-redux";
 import { breakpoints } from "../../styles/theme";
 import useMedia from "../../hooks/useMedia";
+import { Title, List, EmptyList, RecordHead, Headers } from "./Records.styles";
+import Record from "../Record/";
+import Filter from "../FilterRecords";
+import ErrorModal from "../ErrorModal";
+import Spinner from "../Spinner";
+import { RECORDS_HEADERS } from "../../constants";
 import {
-  USER_ID,
-  DEPOSIT_URL,
-  WITHDRAW_URL,
-  SWAP_URL,
-  RECORDS_HEADERS,
-} from "../../constants";
+  setDeposits,
+  setWithdraws,
+  setSwaps,
+  setLoading,
+  setActivities,
+  setError,
+} from "../../redux/activity/activity.actions";
+import { fetchDeposits, fetchWithDraws, fetchSwaps } from "../../utils/api";
 
-function Records() {
+function Records({
+  authToken,
+  setDeposits,
+  setWithdraws,
+  setSwaps,
+  setLoading,
+  setActivities,
+  activities,
+  loading,
+  setError,
+  error,
+}) {
   const [records, setRecords] = useState([]);
-  const [authToken, setAuthToken] = useState(
-    "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3IiOiI2MGIxZGE4NzA5ODI2ODAwNjRiMWJmMDQiLCJhdXRoX2NsaWVudF9pZCI6IjYwNjdmNWE5YmRkNzJkMDBkMTA3NjM2NSIsImlzcyI6IjYwNjdmNThlYmRkNzJkMDBkMTA3NjM1YSIsImF1ZCI6InRyYW5zYWN0aW9uLGlkZW50aXR5LGF1dGgsbm90aWZpY2F0aW9uLGluZm8sdHJhbnNhY3Rpb24sYWNjb3VudCxkZXBvc2l0LHdpdGhkcmF3LHN3YXAiLCJlbWFpbCI6InNvcG9ydGUrX3Rlc3RpbmdAY29pbnNlbmRhLmNvbSIsImxhbmd1YWdlIjoiZXMiLCJtZXRhZGF0YSI6Int9IiwianRpIjoiNjBjMzhlZmNmYWRhYmMwMDY0Mjc1NTViIiwiaWF0IjoxNjIzNDI4ODYwLCJleHAiOjkwMDAxNjIzNDI4ODYwfQ.cMpsIcBY1PO6bsBw0DKqIKC2xpUd389IxJ1RRmO7JuQO6OFSMQKwofKhsQ6C5mHtkfvtRsuHPeqmxqhj2-ZDMA"
-  );
   const tablet = useMedia(breakpoints.tablet);
+  const [counter, setCounter] = useState(1);
+  const NUMBER_OF_ELEMENTS = 10;
 
-  const handleError = (err) => {
-    // TODO: Create a method to handle error
-    console.log(err);
-    return;
-  };
-  const fetchRecords = async (url) => {
+  const fetchRecords = async () => {
     try {
-      const withdraws = await fetch(
-        `${WITHDRAW_URL}users/${USER_ID}/withdraws`,
-        {
-          method: `GET`,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => data);
-
-      const deposits = await fetch(`${DEPOSIT_URL}users/${USER_ID}/deposits`, {
-        method: `GET`,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data);
-
-      const swaps = await fetch(`${SWAP_URL}users/${USER_ID}/swaps`, {
-        method: `GET`,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data);
-      const orderedWithdraws = withdraws.sort(function (a, b) {
-        return new Date(b.created_at) - new Date(a.created_at);
-      });
-      setRecords(orderedWithdraws);
-      console.log(withdraws);
-      console.log(deposits);
-      console.log(swaps);
-    } catch (_) {
-      return handleError(_);
+      await fetchDeposits(authToken).then((data) => setDeposits(data));
+      await fetchWithDraws(authToken).then((data) => setWithdraws(data));
+      await fetchSwaps(authToken).then((data) => setSwaps(data));
+    } catch (error) {
+      setError(error);
     }
+    setActivities();
+
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (authToken.length > 0) {
+    setLoading(true);
+
+    if (authToken) {
       fetchRecords();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken]);
 
+  useMemo(() => {
+    setRecords(activities);
+  }, [activities]);
+
   return (
     <div>
       <Title>Actividad Reciente</Title>
+      <Filter setRecords={setRecords} />
       {tablet && (
         <Headers>
           {" "}
@@ -85,17 +74,52 @@ function Records() {
           ))}
         </Headers>
       )}
-      {records.length > 0 ? (
+
+      {records !== undefined && authToken && records?.length > 0 ? (
         <List>
-          {records.map((record) => (
-            <Record key={record.id} record={record} />
-          ))}
+          {records
+            .flat()
+            .slice(1, NUMBER_OF_ELEMENTS + counter)
+            .map((record) => {
+              if (record) {
+                return (
+                  <Record
+                    setCounter={setCounter}
+                    key={record.id}
+                    record={record}
+                  />
+                );
+              }
+              return <></>;
+            })}
         </List>
+      ) : loading ? (
+        <Spinner />
       ) : (
         <EmptyList>No hay registro de actividad</EmptyList>
       )}
+      {error && <ErrorModal isOpen={error ? true : false} />}
     </div>
   );
 }
 
-export default Records;
+const mapStateToProps = (state) => ({
+  deposits: state.activity.deposits,
+  withdraws: state.activity.withdraws,
+  swaps: state.activity.swaps,
+  authToken: state.activity.authToken,
+  loading: state.activity.loading,
+  activities: state.activity.activities,
+  error: state.activity.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setDeposits: (deposits) => dispatch(setDeposits(deposits)),
+  setWithdraws: (withdraws) => dispatch(setWithdraws(withdraws)),
+  setSwaps: (swaps) => dispatch(setSwaps(swaps)),
+  setActivities: () => dispatch(setActivities()),
+  setLoading: (flag) => dispatch(setLoading(flag)),
+  setError: (error) => dispatch(setError(error)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Records);

@@ -22,6 +22,29 @@ export const formatDateFromString = (date) => {
   return formatDate;
 };
 
+export const normalizeData = (payload, type) => {
+  let activitiesFlat = payload.flat();
+  activitiesFlat = activitiesFlat.map((activity) => {
+    return {
+      id: activity.id,
+      typeOfActivity: type,
+      account_id: activity.account_id,
+      amount: activity.amount,
+      amount_neto: activity.amount_neto,
+      cost: activity.cost,
+      created_at: activity.created_at,
+      updated_at: activity.updated_at,
+      currency: activity.currency ? activity.currency : null,
+      state: activity.state,
+      fee: activity.fee,
+      bought: activity.bought,
+      spent: activity.spent,
+    };
+  });
+
+  return activitiesFlat;
+};
+
 export const parseJwt = (token) => {
   var base64Url = token.split(".")[1];
   var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");

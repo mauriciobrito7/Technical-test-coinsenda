@@ -1,5 +1,5 @@
 import styled from "styled-components/macro";
-import { colors } from "../../styles/theme";
+import { device, colors } from "../../styles/theme";
 
 export const LoadRing = styled.div`
   display: inline-block;
@@ -7,6 +7,10 @@ export const LoadRing = styled.div`
   width: 80px;
   height: 80px;
   margin: calc(50% - 40px) calc(50% - 40px);
+  ${device.tablet`
+    margin: calc(10% - 40px) calc(50% - 40px);
+
+  `}
   div {
     box-sizing: border-box;
     display: block;
