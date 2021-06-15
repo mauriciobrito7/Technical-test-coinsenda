@@ -63,10 +63,11 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       };
 
     case "SET_TOKEN":
-      return {
-        ...state,
-        authToken: action.payload,
-      };
+    return {
+      ...state,
+      authToken: action.payload,
+    };
+ 
     default:
       return state;
   }

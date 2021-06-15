@@ -8,8 +8,11 @@ function ErrorModal({ isOpen, setToken, setError }) {
   const [tokenInput, setTokenInput] = useState();
 
   const handleSave = (token) => {
+    const regex =(^[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*\.[A-Za-z0-9-_]*$);
+   if(token !== undefined){
     setToken(token);
     setError(null);
+   }
   };
 
   const handleChange = (e) => {
