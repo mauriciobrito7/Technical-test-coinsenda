@@ -20,6 +20,7 @@ function Record({ record, setCounter }) {
     if (loadMore) {
       setCounter((prevState) => prevState + 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadMore]);
   return (
     <Card ref={element} to={`/transaction/${record.id}`}>

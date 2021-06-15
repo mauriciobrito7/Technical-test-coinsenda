@@ -8,6 +8,7 @@ export const ModalBase = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
+  width: 100%;
   background: ${colors.white};
   display: flex;
   flex-direction: column;
@@ -22,5 +23,4 @@ export const ModalContainer = styled.div`
   border: 1px solid ${colors.gray};
   border-radius: 4px;
   padding: 1em;
-  width: 400px;
 `;
