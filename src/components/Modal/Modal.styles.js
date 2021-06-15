@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
 import { colors } from "../../styles/theme";
+import { fadeIn } from "../../styles/animation";
 
 export const ModalBase = styled.div`
   position: fixed;
@@ -11,6 +12,7 @@ export const ModalBase = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  ${fadeIn({ time: ".5s" })};
 `;
 
 export const ModalContainer = styled.div`

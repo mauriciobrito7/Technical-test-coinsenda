@@ -2,8 +2,9 @@ import { useState } from "react";
 import Modal from "../Modal";
 import { connect } from "react-redux";
 import { setToken, setError } from "../../redux/activity/activity.actions";
+import { Message, Label, Input, Button } from "./ErrorModal.styles";
 
-function ErrorModal({ isOpen, onCloseModal, onOpenModal, setToken, setError }) {
+function ErrorModal({ isOpen, setToken, setError }) {
   const [tokenInput, setTokenInput] = useState();
 
   const handleSave = (token) => {
@@ -18,9 +19,16 @@ function ErrorModal({ isOpen, onCloseModal, onOpenModal, setToken, setError }) {
 
   return (
     <Modal isOpen={isOpen}>
-      <label>Ingresar token</label>
-      <input onChange={handleChange} type="text" />
-      <button onClick={() => handleSave(tokenInput)}>Guardar</button>
+      <Message>Su token ha expirado o no es válido</Message>
+      <Label htmlFor="token">Ingresar token</Label>
+      <Input
+        placeholder="Ingrese nuevo token"
+        onChange={handleChange}
+        name="token"
+        id="token"
+        type="text"
+      />
+      <Button onClick={() => handleSave(tokenInput)}>Guardar</Button>
     </Modal>
   );
 }
