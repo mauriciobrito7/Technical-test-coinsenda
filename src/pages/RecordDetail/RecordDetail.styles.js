@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export const ContainerDetail = styled.div`
   border: 1px solid ${colors.gray};
   border-radius: 4px;
-  max-width: 360px;
+  max-width: 480px;
   min-height: 360px;
   margin: 2em auto;
   ${fadeIn({ time: ".5s" })};
@@ -15,11 +15,15 @@ export const ContainerDetail = styled.div`
   }
 `;
 
+export const Navigation = styled.nav`
+  width: 100%;
+  background: ${colors.primary};
+`;
+
 export const IconNavigation = styled(Link)`
-  margin-top: 1em;
-  margin-left: 1em;
+  padding: 1em;
   svg {
-    fill: ${colors.primary};
+    fill: ${colors.white};
     width: 2em;
     height: 2em;
   }
@@ -31,7 +35,6 @@ export const Header = styled.header`
   width: 100%;
   min-height: 20%;
   padding: 1em;
-  border-radius: 4px 4px 0px 0px;
 `;
 
 export const HeaderTitle = styled.h2`

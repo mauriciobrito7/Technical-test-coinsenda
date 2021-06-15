@@ -10,6 +10,7 @@ import {
   Field,
   FieldValue,
   IconNavigation,
+  Navigation,
 } from "./RecordDetail.styles";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -28,12 +29,15 @@ function RecordDetail({ activities }) {
   useEffect(() => {
     const newRecord = getRecord(id);
     setRecord(newRecord);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   return (
     <ContainerDetail>
-      <IconNavigation to="/">
-        <ArrowBack />
-      </IconNavigation>
+      <Navigation>
+        <IconNavigation to="/">
+          <ArrowBack />
+        </IconNavigation>
+      </Navigation>
       {record ? (
         <>
           <Header>
@@ -58,7 +62,9 @@ function RecordDetail({ activities }) {
                     <Field>Comprado:</Field>
                     <FieldValue>
                       {record.bought > 1
-                        ? formatterCurrency("COP", record.bought)
+                        ? formatterCurrency("es-CO", "COP").format(
+                            record.bought
+                          )
                         : record.bought}
                     </FieldValue>
                   </Detail>
@@ -66,7 +72,7 @@ function RecordDetail({ activities }) {
                     <Field>Gastado:</Field>
                     <FieldValue>
                       {record.spent > 1
-                        ? formatterCurrency("COP", record.bought)
+                        ? formatterCurrency("es-CO", "COP").format(record.spent)
                         : record.spent}
                     </FieldValue>
                   </Detail>
