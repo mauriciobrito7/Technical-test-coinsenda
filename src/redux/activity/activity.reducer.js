@@ -17,7 +17,7 @@ const activityReducer = (state = INITIAL_STATE, action) => {
       const deposits = normalizeData(action.payload, "deposito");
       return {
         ...state,
-        deposits: [...state.deposits, deposits],
+        deposits: deposits,
       };
 
     case "SET_WITHDRAWS":
@@ -25,14 +25,14 @@ const activityReducer = (state = INITIAL_STATE, action) => {
 
       return {
         ...state,
-        withdraws: [...state.withdraws, withdraws],
+        withdraws: withdraws,
       };
 
     case "SET_SWAPS":
       const swaps = normalizeData(action.payload, "intercambio");
       return {
         ...state,
-        swaps: [...state.swaps, swaps],
+        swaps: swaps,
       };
     case "SET_ACTIVITIES":
       const depositsFlat = normalizeData(state.deposits, "deposito");

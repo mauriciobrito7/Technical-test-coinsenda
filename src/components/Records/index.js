@@ -35,7 +35,7 @@ function Records({
   const [counter, setCounter] = useState(1);
   const NUMBER_OF_ELEMENTS = 10;
 
-  const fetchRecords = async () => {
+  const fetchRecords =  async() => {
     try {
       await fetchDeposits(authToken).then((data) => setDeposits(data));
       await fetchWithDraws(authToken).then((data) => setWithdraws(data));
@@ -46,7 +46,7 @@ function Records({
     setActivities();
 
     setLoading(false);
-  };
+  }
 
   useEffect(() => {
     setLoading(true);
