@@ -11,6 +11,7 @@ export const fetchDeposits = async (authToken) => {
         Authorization: `Bearer ${authToken}`,
       },
     });
+    if (!response.ok) throw new Error(await response.text());
 
     const deposits = await response.json();
 
@@ -19,7 +20,7 @@ export const fetchDeposits = async (authToken) => {
     });
     return orderedDeposits;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
