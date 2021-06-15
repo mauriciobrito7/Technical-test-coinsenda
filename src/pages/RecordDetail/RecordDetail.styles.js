@@ -1,6 +1,7 @@
 import styled from "styled-components/macro";
 import { colors } from "../../styles/theme";
 import { fadeIn } from "../../styles/animation";
+import { Link } from "react-router-dom";
 
 export const ContainerDetail = styled.div`
   border: 1px solid ${colors.gray};
@@ -8,10 +9,19 @@ export const ContainerDetail = styled.div`
   max-width: 360px;
   min-height: 360px;
   margin: 2em auto;
-  border-radius: 4px;
   ${fadeIn({ time: ".5s" })};
   &:nth-of-type(odd) {
     background: ${colors.hoverCard};
+  }
+`;
+
+export const IconNavigation = styled(Link)`
+  margin-top: 1em;
+  margin-left: 1em;
+  svg {
+    fill: ${colors.primary};
+    width: 2em;
+    height: 2em;
   }
 `;
 
